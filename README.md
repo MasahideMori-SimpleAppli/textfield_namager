@@ -30,9 +30,9 @@ TextField(
 ```
 
 ## Support
-Basically no support.
-Please file an issue if you have any problems.
-This package is low priority, but may be fixed.
+Basically no support.  
+Please file an issue if you have any problems.  
+This package is low priority, but may be fixed.  
 
 ## About version control
 The C part will be changed at the time of version upgrade.
