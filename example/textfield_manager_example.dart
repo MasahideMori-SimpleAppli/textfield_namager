@@ -27,11 +27,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextFieldManager manager = TextFieldManager();
+  final TextFieldManager _tfm = TextFieldManager();
 
   @override
   void dispose() {
-    manager.dispose();
+    _tfm.dispose();
     super.dispose();
   }
 
@@ -45,24 +45,24 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextField(
-                  focusNode: manager.getFocus("first"),
-                  controller: manager.getCtrl("first", initialText: "first"),
+                  focusNode: _tfm.getFocus("first"),
+                  controller: _tfm.getCtrl("first", initialText: "first"),
                   onSubmitted: (String s) {
-                    manager.getFocus("second").requestFocus();
+                    _tfm.getFocus("second").requestFocus();
                   },
                 ),
                 TextField(
-                  focusNode: manager.getFocus("second"),
-                  controller: manager.getCtrl("second", initialText: "second"),
+                  focusNode: _tfm.getFocus("second"),
+                  controller: _tfm.getCtrl("second", initialText: "second"),
                   onSubmitted: (String s) {
-                    manager.getFocus("third").requestFocus();
+                    _tfm.getFocus("third").requestFocus();
                   },
                 ),
                 TextField(
-                  focusNode: manager.getFocus("third"),
-                  controller: manager.getCtrl("third", initialText: "third"),
+                  focusNode: _tfm.getFocus("third"),
+                  controller: _tfm.getCtrl("third", initialText: "third"),
                   onSubmitted: (String s) {
-                    manager.getFocus("first").requestFocus();
+                    _tfm.getFocus("first").requestFocus();
                   },
                 )
               ],

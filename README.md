@@ -8,23 +8,23 @@ Please see Example tab for usage.
 You can collectively dispose in dispose method all TextEditingControllers and FocusNodes inside a StatefulWidget.
 
 ```dart
-TextFieldManager manager = TextFieldManager();
+TextFieldManager _tfm = TextFieldManager();
 
 @override
 void dispose() {
-  manager.dispose();
+  _tfm.dispose();
   super.dispose();
 }
 ```
 
-Call getCtrl or getFocus method widh name will internally create a new object if not yet created, or return the previously created one if already created.
+Call getCtrl or getFocus method with name will internally create a new object if not yet created, or return the previously created one if already created.
 
 ```dart
 TextField(
-  focusNode: manager.getFocus("first"),
-  controller: manager.getCtrl("first", initialText: "first"),
+  focusNode: _tfm.getFocus("first"),
+  controller: _tfm.getCtrl("first", initialText: "first"),
   onSubmitted: (String s) {
-    manager.getFocus("second").requestFocus();
+    _tfm.getFocus("second").requestFocus();
   }
 )
 ```
