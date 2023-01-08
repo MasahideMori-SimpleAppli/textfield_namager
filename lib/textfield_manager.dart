@@ -8,11 +8,43 @@ import 'package:flutter/material.dart';
 /// First edition creation date 2022-11-05 23:49:27
 ///
 class TextFieldManager {
+  final String className = 'TextFieldManager';
+  final String version = '1';
   Map<String, TextEditingController> ctrlMap = {};
   Map<String, FocusNode> focusMap = {};
 
   /// Constructor
   TextFieldManager();
+
+  /// (en)Convert the object to a dictionary.
+  /// Be careful how you handle user data.
+  ///
+  /// (ja)このクラスを辞書に変換します。
+  /// 簡単に変換できますが、変換されたユーザーデータの取り扱いには十分注意することをお勧めします。
+  Map<String, dynamic> toDict() {
+    Map<String, dynamic> d = {};
+    d['class_name'] = className;
+    d['version'] = version;
+    Map<String, String> textMap = {};
+    for (String i in ctrlMap.keys) {
+      textMap[i] = ctrlMap[i]!.text;
+    }
+    d['text_map'] = textMap;
+    return d;
+  }
+
+  /// (en)Restore this object from the dictionary.
+  /// If data with the same key already exists, it will be overwritten.
+  ///
+  /// (ja)このクラスのtoDictで変換された辞書から、このクラスに設定されていた内容を復元します。
+  /// * [src] : A dictionary made with toDict of this class.
+  void fromDict(Map<String, dynamic> src) {
+    for (var i in src['text_map'].keys) {
+      getCtrl(i as String,
+          initialText: src['text_map'][i] as String, isAlwaysInitialize: true);
+      getFocus(i);
+    }
+  }
 
   /// (en)Dispose all managed objects.
   /// Usually called inside the dispose of the widget.
@@ -38,8 +70,14 @@ class TextFieldManager {
   /// * [name] : A unique name assigned to the TextEditingController.
   /// * [initialText] : Initial text for the controller.
   /// Applies only when first created.
-  TextEditingController getCtrl(String name, {String? initialText}) {
+  /// * [isAlwaysInitialize] : If true, always set initialText.
+  /// If true and initialText is null, initialize by empty string.
+  TextEditingController getCtrl(String name,
+      {String? initialText, bool isAlwaysInitialize = false}) {
     if (ctrlMap.containsKey(name)) {
+      if (isAlwaysInitialize) {
+        ctrlMap[name]!.text = initialText ?? "";
+      }
       return ctrlMap[name]!;
     } else {
       TextEditingController r = TextEditingController(text: initialText);
