@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:textfield_manager/textfield_manager.dart';
 
@@ -64,6 +66,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   onSubmitted: (String s) {
                     _tfm.getFocus("first").requestFocus();
                   },
+                ),
+                Container(
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _tfm.getCtrl("sendTextSample").text = json.encode(
+                                _tfm.toDict(nonSaveKeys: ["sendTextSample"]));
+                          });
+                        },
+                        child: const Text("Send text"))),
+                TextField(
+                  focusNode: _tfm.getFocus("sendTextSample"),
+                  controller: _tfm.getCtrl("sendTextSample"),
+                  maxLines: 8,
+                  decoration:
+                      const InputDecoration(hintText: "send text sample"),
                 )
               ],
             )),

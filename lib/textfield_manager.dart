@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 /// First edition creation date 2022-11-05 23:49:27
 ///
 class TextFieldManager {
-  final String className = 'TextFieldManager';
-  final String version = '1';
+  String get className => 'TextFieldManager';
+  String get version => '2';
   Map<String, TextEditingController> ctrlMap = {};
   Map<String, FocusNode> focusMap = {};
 
@@ -21,13 +21,22 @@ class TextFieldManager {
   ///
   /// (ja)このクラスを辞書に変換します。
   /// 簡単に変換できますが、変換されたユーザーデータの取り扱いには十分注意することをお勧めします。
-  Map<String, dynamic> toDict() {
+  ///
+  /// * [nonSaveKeys] : If you specify a key that you don't want saved,
+  /// that key and its contents will not be converted to a dictionary.
+  Map<String, dynamic> toDict({List<String>? nonSaveKeys}) {
     Map<String, dynamic> d = {};
     d['class_name'] = className;
     d['version'] = version;
     Map<String, String> textMap = {};
     for (String i in ctrlMap.keys) {
-      textMap[i] = ctrlMap[i]!.text;
+      if (nonSaveKeys != null) {
+        if (!nonSaveKeys.contains(i)) {
+          textMap[i] = ctrlMap[i]!.text;
+        }
+      } else {
+        textMap[i] = ctrlMap[i]!.text;
+      }
     }
     d['text_map'] = textMap;
     return d;
