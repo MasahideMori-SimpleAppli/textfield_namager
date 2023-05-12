@@ -1,10 +1,10 @@
 name: textfield_manager
 description: This package makes it easier to manage the state of textfields.
-version: 1.2.0
+version: 2.0.0
 repository: https://github.com/MasahideMori-SimpleAppli/textfield_namager
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=2.18.2 <4.0.0'
 
 dependencies:
   flutter:

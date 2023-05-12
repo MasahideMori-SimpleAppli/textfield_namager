@@ -29,6 +29,10 @@ TextField(
 )
 ```
 
+## Serialization
+A call to toDict can generate a Map containing information about all the text fields being assigned.
+Additionally, you can retrieve information from this Map using fromDict.
+
 ## Support
 Basically no support.  
 Please file an issue if you have any problems.  

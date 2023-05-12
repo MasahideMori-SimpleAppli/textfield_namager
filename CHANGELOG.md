@@ -1,3 +1,6 @@
+## 2.0.0
+* Compatible with Dart 3.
+
 ## 1.2.0
 * I adjusted the class to be easy to extend.
 * Added an optional argument nonSaveKeys to toDict method.
