@@ -1,3 +1,7 @@
+## 3.0.0
+* Changed visibility of variables.
+* Added containsEmptyCtrl function.
+
 ## 2.0.0
 * Compatible with Dart 3.
 

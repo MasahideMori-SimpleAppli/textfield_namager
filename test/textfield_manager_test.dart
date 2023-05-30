@@ -13,6 +13,11 @@ void main() {
       expect(tfm.getCtrl("first").text == "1", true);
       expect((map["text_map"] as Map).containsKey("first"), true);
       expect(!(map["text_map"] as Map).containsKey("second"), true);
+      // function check
+      tfm.getCtrl("first", initialText: "", isAlwaysInitialize: true);
+      expect(tfm.containsEmptyCtrl(), true);
+      tfm.getCtrl("first", initialText: "1", isAlwaysInitialize: true);
+      expect(tfm.containsEmptyCtrl(), false);
     });
   });
 }

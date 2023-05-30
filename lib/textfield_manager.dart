@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 ///
 class TextFieldManager {
   String get className => 'TextFieldManager';
-  String get version => '2';
-  Map<String, TextEditingController> ctrlMap = {};
-  Map<String, FocusNode> focusMap = {};
+
+  String get version => '3';
+  final Map<String, TextEditingController> _ctrlMap = {};
+  final Map<String, FocusNode> _focusMap = {};
 
   /// Constructor
   TextFieldManager();
@@ -29,13 +30,13 @@ class TextFieldManager {
     d['class_name'] = className;
     d['version'] = version;
     Map<String, String> textMap = {};
-    for (String i in ctrlMap.keys) {
+    for (String i in _ctrlMap.keys) {
       if (nonSaveKeys != null) {
         if (!nonSaveKeys.contains(i)) {
-          textMap[i] = ctrlMap[i]!.text;
+          textMap[i] = _ctrlMap[i]!.text;
         }
       } else {
-        textMap[i] = ctrlMap[i]!.text;
+        textMap[i] = _ctrlMap[i]!.text;
       }
     }
     d['text_map'] = textMap;
@@ -61,14 +62,14 @@ class TextFieldManager {
   /// (ja)管理中の全てのオブジェクトを破棄します。
   /// 通常、ウィジェットのdispose内で呼び出します。
   void dispose() {
-    for (TextEditingController i in ctrlMap.values) {
+    for (TextEditingController i in _ctrlMap.values) {
       i.dispose();
     }
-    for (FocusNode i in focusMap.values) {
+    for (FocusNode i in _focusMap.values) {
       i.dispose();
     }
-    ctrlMap.clear();
-    focusMap.clear();
+    _ctrlMap.clear();
+    _focusMap.clear();
   }
 
   /// (en)If the controller with the specified name has been created,
@@ -83,14 +84,14 @@ class TextFieldManager {
   /// If true and initialText is null, initialize by empty string.
   TextEditingController getCtrl(String name,
       {String? initialText, bool isAlwaysInitialize = false}) {
-    if (ctrlMap.containsKey(name)) {
+    if (_ctrlMap.containsKey(name)) {
       if (isAlwaysInitialize) {
-        ctrlMap[name]!.text = initialText ?? "";
+        _ctrlMap[name]!.text = initialText ?? "";
       }
-      return ctrlMap[name]!;
+      return _ctrlMap[name]!;
     } else {
       TextEditingController r = TextEditingController(text: initialText);
-      ctrlMap[name] = r;
+      _ctrlMap[name] = r;
       return r;
     }
   }
@@ -102,11 +103,11 @@ class TextFieldManager {
   ///
   /// * [name] : A unique name assigned to the FocusNode.
   FocusNode getFocus(String name) {
-    if (focusMap.containsKey(name)) {
-      return focusMap[name]!;
+    if (_focusMap.containsKey(name)) {
+      return _focusMap[name]!;
     } else {
       FocusNode r = FocusNode();
-      focusMap[name] = r;
+      _focusMap[name] = r;
       return r;
     }
   }
@@ -117,7 +118,7 @@ class TextFieldManager {
   /// (ja)管理中のコントローラのマップを返します。
   /// 通常はこれを直接呼び出さないでください。
   Map<String, TextEditingController> getAllCtrl() {
-    return ctrlMap;
+    return _ctrlMap;
   }
 
   /// (en)Returns a map of managed FocusNodes.
@@ -126,6 +127,19 @@ class TextFieldManager {
   /// (ja)管理中のフォーカスノードのマップを返します。
   /// 通常はこれを直接呼び出さないでください。
   Map<String, FocusNode> getALLFocus() {
-    return focusMap;
+    return _focusMap;
+  }
+
+  /// (en) Returns true if there is an empty string in the content of the controller under management,
+  /// false if it does not exist.
+  ///
+  /// (ja) 管理中のコントローラの内容で空文字のものが存在するならtrue, 存在しない場合はfalseを返します。
+  bool containsEmptyCtrl() {
+    for (TextEditingController i in _ctrlMap.values) {
+      if (i.text == "") {
+        return true;
+      }
+    }
+    return false;
   }
 }
