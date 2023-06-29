@@ -1,5 +1,9 @@
 # textfield_manager
 
+## Note
+This package has been merged into the [simple_managers](https://pub.dev/packages/simple_managers) package.  
+This package is now deprecated.
+
 ## Overview
 This package makes it easier to manage the state of textfields.
 
